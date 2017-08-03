@@ -36,37 +36,37 @@ if 10.minutes > 500.seconds {
 let tenMinutes = 10.minutes
 ```
 
-Here `tenMinutes` will actually be of type `TimeInterval<Minute>` (not to be confused with **Foundation**'s `TimeInterval`). There are seven time units available, from nanoseconds to days:
+Here `tenMinutes` will actually be of type `Interval<Minute>` (not to be confused with **Foundation**'s `TimeInterval`). There are seven time units available, from nanoseconds to days:
 
 ```swift
 public extension Double {
     
-    var seconds: TimeInterval<Second> {
-        return TimeInterval<Second>(self)
+    var seconds: Interval<Second> {
+        return Interval<Second>(self)
     }
     
-    var minutes: TimeInterval<Minute> {
-        return TimeInterval<Minute>(self)
+    var minutes: Interval<Minute> {
+        return Interval<Minute>(self)
     }
     
-    var milliseconds: TimeInterval<Millisecond> {
-        return TimeInterval<Millisecond>(self)
+    var milliseconds: Interval<Millisecond> {
+        return Interval<Millisecond>(self)
     }
     
-    var microseconds: TimeInterval<Microsecond> {
-        return TimeInterval<Microsecond>(self)
+    var microseconds: Interval<Microsecond> {
+        return Interval<Microsecond>(self)
     }
     
-    var nanoseconds: TimeInterval<Nanosecond> {
-        return TimeInterval<Nanosecond>(self)
+    var nanoseconds: Interval<Nanosecond> {
+        return Interval<Nanosecond>(self)
     }
     
-    var hours: TimeInterval<Hour> {
-        return TimeInterval<Hour>(self)
+    var hours: Interval<Hour> {
+        return Interval<Hour>(self)
     }
     
-    var days: TimeInterval<Day> {
-        return TimeInterval<Day>(self)
+    var days: Interval<Day> {
+        return Interval<Day>(self)
     }
     
 }
@@ -77,10 +77,10 @@ public extension Double {
 You can perform all basic arithmetic operations on time intervals, even of different units:
 
 ```swift
-let interval = 10.minutes + 15.seconds - 3.minutes + 2.hours // TimeInterval<Minute>
+let interval = 10.minutes + 15.seconds - 3.minutes + 2.hours // Interval<Minute>
 let doubled = interval * 2
 
-let seconds = 10.seconds + 3.minutes // TimeInterval<Second>
+let seconds = 10.seconds + 3.minutes // Interval<Second>
 ```
 
 You can also use these operations on `Date`:
@@ -94,10 +94,10 @@ let oneHourAfter = Date() + 1.hours
 Time intervals are easily convertible:
 
 ```swift
-let twoMinutesInSeconds = 2.minutes.inSeconds // TimeInterval<Second>
+let twoMinutesInSeconds = 2.minutes.inSeconds // Interval<Second>
 ```
 
-You can also convert time interval to **Foundation**'s `TimeInterval`, if needed:
+You can also convert intervals to **Foundation**'s `TimeInterval`, if needed:
 
 ```swift
 let timeInterval = 5.minutes.timeInterval
@@ -106,9 +106,9 @@ let timeInterval = 5.minutes.timeInterval
 You can also use `converted(to:)` method:
 
 ```swift
-let fiveSecondsInHours = 5.seconds.converted(to: Hour.self)
+let fiveSecondsInHours = 5.seconds.converted(to: Hour.self) // Interval<Hour>
 // or
-let fiveSecondsInHours: TimeInterval<Hour> = 5.seconds.converted()
+let fiveSecondsInHours: Interval<Hour> = 5.seconds.converted()
 ```
 
 Although, in my opinion, you would rarely need to.
@@ -138,16 +138,24 @@ public enum Week : TimeUnit {
 Now you can use it as any other time unit:
 
 ```swift
-let fiveWeeks = TimeInterval<Week>(5)
+let fiveWeeks = Interval<Week>(5)
 ```
 
 For the sake of convenience, don't forget to write those handy extensions:
 
 
 ```swift
-extension Time.TimeInterval {
+public enum Week : TimeUnit {
     
-    public var inWeeks: Time.TimeInterval<Week> {
+    public static var toTimeIntervalRatio: Double {
+        return 604800
+    }
+    
+}
+
+extension Interval {
+    
+    public var inWeeks: Interval<Week> {
         return converted()
     }
     
@@ -155,22 +163,20 @@ extension Time.TimeInterval {
 
 extension Double {
     
-    public var weeks: Time.TimeInterval<Week> {
-        return Time.TimeInterval<Week>(self)
+    public var weeks: Interval<Week> {
+        return Interval<Week>(self)
     }
     
 }
 
 extension Int {
     
-    public var weeks: Time.TimeInterval<Week> {
-        return Time.TimeInterval<Week>(Double(self))
+    public var weeks: Interval<Week> {
+        return Interval<Week>(Double(self))
     }
     
 }
 ```
-
-`Time.` prefix is not to confuse the compiler with **Foundation**.
 
 ## Disclaimer
 
@@ -181,7 +187,7 @@ extension Int {
 **Time** is available through [Carthage][carthage-url]. To install, just write into your Cartfile:
 
 ```ruby
-github "dreymonde/Time" ~> 0.0.1
+github "dreymonde/Time" ~> 0.1.0
 ```
 
 You can also use SwiftPM. Just add to your `Package.swift`:
@@ -191,7 +197,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 0, minor: 0),
+        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 0, minor: 1),
     ]
 )
 ```
