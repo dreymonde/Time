@@ -18,9 +18,9 @@ public enum Week : TimeUnit {
     
 }
 
-extension Time.TimeInterval {
+extension Interval {
     
-    public var inWeeks: Time.TimeInterval<Week> {
+    public var inWeeks: Interval<Week> {
         return converted()
     }
     
@@ -28,16 +28,16 @@ extension Time.TimeInterval {
 
 extension Double {
     
-    public var weeks: Time.TimeInterval<Week> {
-        return Time.TimeInterval<Week>(self)
+    public var weeks: Interval<Week> {
+        return Interval<Week>(self)
     }
     
 }
 
 extension Int {
     
-    public var weeks: Time.TimeInterval<Week> {
-        return Time.TimeInterval<Week>(Double(self))
+    public var weeks: Interval<Week> {
+        return Interval<Week>(Double(self))
     }
     
 }
@@ -66,6 +66,10 @@ class TimeTests: XCTestCase {
         if 10.minutes > 500.seconds {
             print("That's right")
         }
+        XCTAssertEqual(tenMinutes.timeInterval, 600)
+        XCTAssertGreaterThan(afterTenMinutes, Date())
+        XCTAssertEqual(tenMinutesAndSome.timeInterval, 615)
+        XCTAssertEqual(tenMinutesInSeconds.value, 600)
     }
     
 }

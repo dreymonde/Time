@@ -10,23 +10,23 @@ import Foundation
 
 extension Date {
     
-    public func addingTimeInterval<Unit : TimeUnit>(_ interval: TimeInterval<Unit>) -> Date {
+    public func addingTimeInterval<Unit : TimeUnit>(_ interval: Interval<Unit>) -> Date {
         return addingTimeInterval(interval.timeInterval)
     }
     
-    public static func + <Unit : TimeUnit>(lhs: Date, rhs: TimeInterval<Unit>) -> Date {
+    public static func + <Unit : TimeUnit>(lhs: Date, rhs: Interval<Unit>) -> Date {
         return lhs.addingTimeInterval(rhs)
     }
     
-    public static func - <Unit : TimeUnit>(lhs: Date, rhs: TimeInterval<Unit>) -> Date {
+    public static func - <Unit : TimeUnit>(lhs: Date, rhs: Interval<Unit>) -> Date {
         return lhs.addingTimeInterval(-rhs)
     }
     
-    public static func += <Unit : TimeUnit>(lhs: inout Date, rhs: TimeInterval<Unit>) {
+    public static func += <Unit : TimeUnit>(lhs: inout Date, rhs: Interval<Unit>) {
         lhs = lhs + rhs
     }
     
-    public static func -= <Unit : TimeUnit>(lhs: inout Date, rhs: TimeInterval<Unit>) {
+    public static func -= <Unit : TimeUnit>(lhs: inout Date, rhs: Interval<Unit>) {
         lhs = lhs - rhs
     }
     
@@ -34,11 +34,11 @@ extension Date {
 
 extension DispatchQueue {
     
-    func asyncAfter<Unit : TimeUnit>(after interval: TimeInterval<Unit>, execute item: DispatchWorkItem) {
+    func asyncAfter<Unit : TimeUnit>(after interval: Interval<Unit>, execute item: DispatchWorkItem) {
         self.asyncAfter(deadline: .now() + interval.timeInterval, execute: item)
     }
     
-    func asyncAfter<Unit : TimeUnit>(after interval: TimeInterval<Unit>, qos: DispatchQoS = .default, flags: DispatchWorkItemFlags = [], execute block: @escaping () -> Void) {
+    func asyncAfter<Unit : TimeUnit>(after interval: Interval<Unit>, qos: DispatchQoS = .default, flags: DispatchWorkItemFlags = [], execute block: @escaping () -> Void) {
         self.asyncAfter(deadline: .now() + interval.timeInterval, qos: qos, flags: flags, execute: block)
     }
     

@@ -14,7 +14,7 @@ public protocol TimeUnit {
     
 }
 
-public struct TimeInterval<Unit : TimeUnit> {
+public struct Interval<Unit : TimeUnit> {
     
     public var value: Double
     
@@ -33,13 +33,13 @@ public struct TimeInterval<Unit : TimeUnit> {
     
 }
 
-extension TimeInterval : Hashable {
+extension Interval : Hashable {
     
-    public static func == (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+    public static func == (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value == rhs.value
     }
     
-    public static func == <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+    public static func == <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs == rhs.converted()
     }
     
@@ -49,71 +49,71 @@ extension TimeInterval : Hashable {
     
 }
 
-extension TimeInterval {
+extension Interval {
     
-    public static func < (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+    public static func < (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value < rhs.value
     }
     
-    public static func <= (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+    public static func <= (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value <= rhs.value
     }
     
-    public static func > (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+    public static func > (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value >= rhs.value
     }
     
-    public static func >= (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+    public static func >= (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value >= rhs.value
     }
     
-    public static func < <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+    public static func < <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs < rhs.converted()
     }
     
-    public static func <= <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+    public static func <= <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs <= rhs.converted()
     }
     
-    public static func > <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+    public static func > <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs > rhs.converted()
     }
     
-    public static func >= <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+    public static func >= <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs >= rhs.converted()
     }
     
 }
 
-extension TimeInterval {
+extension Interval {
     
-    public prefix static func - (lhs: TimeInterval<Unit>) -> TimeInterval<Unit> {
-        return TimeInterval<Unit>(-lhs.value)
+    public prefix static func - (lhs: Interval<Unit>) -> Interval<Unit> {
+        return Interval<Unit>(-lhs.value)
     }
     
-    public static func + <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> TimeInterval<Unit> {
+    public static func + <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
         let inInterval = lhs.timeInterval + rhs.timeInterval
-        return TimeInterval<Unit>(timeInterval: inInterval)
+        return Interval<Unit>(timeInterval: inInterval)
     }
     
-    public static func - <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> TimeInterval<Unit> {
+    public static func - <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
         return lhs + (-rhs)
     }
     
-    static func += <OtherUnit : TimeUnit>(lhs: inout TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) {
+    static func += <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs + rhs
     }
     
-    static func -= <OtherUnit : TimeUnit>(lhs: inout TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) {
+    static func -= <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs - rhs
     }
     
-    static func * (lhs: TimeInterval<Unit>, rhs: Double) -> TimeInterval<Unit> {
-        return TimeInterval<Unit>(lhs.value * rhs)
+    static func * (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
+        return Interval<Unit>(lhs.value * rhs)
     }
     
-    static func / (lhs: TimeInterval<Unit>, rhs: Double) -> TimeInterval<Unit> {
-        return TimeInterval<Unit>(lhs.value / rhs)
+    static func / (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
+        return Interval<Unit>(lhs.value / rhs)
     }
     
 }
@@ -174,38 +174,38 @@ public enum Nanosecond : TimeUnit {
     
 }
 
-public extension TimeInterval {
+public extension Interval {
     
-    var inSeconds: TimeInterval<Second> {
+    var inSeconds: Interval<Second> {
         return converted()
     }
     
-    var inMinutes: TimeInterval<Minute> {
+    var inMinutes: Interval<Minute> {
         return converted()
     }
     
-    var inMilliseconds: TimeInterval<Millisecond> {
+    var inMilliseconds: Interval<Millisecond> {
         return converted()
     }
     
-    var inMicroseconds: TimeInterval<Microsecond> {
+    var inMicroseconds: Interval<Microsecond> {
         return converted()
     }
     
-    var inNanoseconds: TimeInterval<Nanosecond> {
+    var inNanoseconds: Interval<Nanosecond> {
         return converted()
     }
     
-    var inHours: TimeInterval<Hour> {
+    var inHours: Interval<Hour> {
         return converted()
     }
     
-    var inDays: TimeInterval<Day> {
+    var inDays: Interval<Day> {
         return converted()
     }
     
-    func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> TimeInterval<OtherUnit> {
-        return TimeInterval<OtherUnit>(self.value * self.conversionRate(to: otherTimeUnit))
+    func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Interval<OtherUnit> {
+        return Interval<OtherUnit>(self.value * self.conversionRate(to: otherTimeUnit))
     }
     
     func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Double {
@@ -216,64 +216,64 @@ public extension TimeInterval {
 
 public extension Double {
     
-    var seconds: TimeInterval<Second> {
-        return TimeInterval<Second>(self)
+    var seconds: Interval<Second> {
+        return Interval<Second>(self)
     }
     
-    var minutes: TimeInterval<Minute> {
-        return TimeInterval<Minute>(self)
+    var minutes: Interval<Minute> {
+        return Interval<Minute>(self)
     }
     
-    var milliseconds: TimeInterval<Millisecond> {
-        return TimeInterval<Millisecond>(self)
+    var milliseconds: Interval<Millisecond> {
+        return Interval<Millisecond>(self)
     }
     
-    var microseconds: TimeInterval<Microsecond> {
-        return TimeInterval<Microsecond>(self)
+    var microseconds: Interval<Microsecond> {
+        return Interval<Microsecond>(self)
     }
     
-    var nanoseconds: TimeInterval<Nanosecond> {
-        return TimeInterval<Nanosecond>(self)
+    var nanoseconds: Interval<Nanosecond> {
+        return Interval<Nanosecond>(self)
     }
     
-    var hours: TimeInterval<Hour> {
-        return TimeInterval<Hour>(self)
+    var hours: Interval<Hour> {
+        return Interval<Hour>(self)
     }
     
-    var days: TimeInterval<Day> {
-        return TimeInterval<Day>(self)
+    var days: Interval<Day> {
+        return Interval<Day>(self)
     }
     
 }
 
 public extension Int {
     
-    var seconds: TimeInterval<Second> {
-        return TimeInterval<Second>(Double(self))
+    var seconds: Interval<Second> {
+        return Interval<Second>(Double(self))
     }
     
-    var minutes: TimeInterval<Minute> {
-        return TimeInterval<Minute>(Double(self))
+    var minutes: Interval<Minute> {
+        return Interval<Minute>(Double(self))
     }
     
-    var milliseconds: TimeInterval<Millisecond> {
-        return TimeInterval<Millisecond>(Double(self))
+    var milliseconds: Interval<Millisecond> {
+        return Interval<Millisecond>(Double(self))
     }
     
-    var microseconds: TimeInterval<Microsecond> {
-        return TimeInterval<Microsecond>(Double(self))
+    var microseconds: Interval<Microsecond> {
+        return Interval<Microsecond>(Double(self))
     }
     
-    var nanoseconds: TimeInterval<Nanosecond> {
-        return TimeInterval<Nanosecond>(Double(self))
+    var nanoseconds: Interval<Nanosecond> {
+        return Interval<Nanosecond>(Double(self))
     }
     
-    var hours: TimeInterval<Hour> {
-        return TimeInterval<Hour>(Double(self))
+    var hours: Interval<Hour> {
+        return Interval<Hour>(Double(self))
     }
     
-    var days: TimeInterval<Day> {
-        return TimeInterval<Day>(Double(self))
+    var days: Interval<Day> {
+        return Interval<Day>(Double(self))
     }
     
 }
