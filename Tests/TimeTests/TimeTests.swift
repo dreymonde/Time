@@ -6,14 +6,38 @@
 //  Copyright © 2017 Time. All rights reserved.
 //
 
+import Time
 import Foundation
 import XCTest
-import Time
 
 public enum Week : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 604800
+    }
+    
+}
+
+extension Time.TimeInterval {
+    
+    public var inWeeks: Time.TimeInterval<Week> {
+        return converted()
+    }
+    
+}
+
+extension Double {
+    
+    public var weeks: Time.TimeInterval<Week> {
+        return Time.TimeInterval<Week>(self)
+    }
+    
+}
+
+extension Int {
+    
+    public var weeks: Time.TimeInterval<Week> {
+        return Time.TimeInterval<Week>(Double(self))
     }
     
 }
