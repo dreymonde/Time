@@ -100,12 +100,20 @@ extension TimeInterval {
         return lhs + (-rhs)
     }
     
-}
-
-extension Date {
+    static func += <OtherUnit : TimeUnit>(lhs: inout TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) {
+        lhs = lhs + rhs
+    }
     
-    public func addingTimeInterval<Unit : TimeUnit>(_ interval: TimeInterval<Unit>) -> Date {
-        return addingTimeInterval(interval.timeInterval)
+    static func -= <OtherUnit : TimeUnit>(lhs: inout TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) {
+        lhs = lhs - rhs
+    }
+    
+    static func * (lhs: TimeInterval<Unit>, rhs: Double) -> TimeInterval<Unit> {
+        return TimeInterval<Unit>(lhs.value * rhs)
+    }
+    
+    static func / (lhs: TimeInterval<Unit>, rhs: Double) -> TimeInterval<Unit> {
+        return TimeInterval<Unit>(lhs.value / rhs)
     }
     
 }
