@@ -118,7 +118,7 @@ extension TimeInterval {
     
 }
 
-public struct Day : TimeUnit {
+public enum Day : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 86400
@@ -126,7 +126,7 @@ public struct Day : TimeUnit {
     
 }
 
-public struct Hour : TimeUnit {
+public enum Hour : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 3600
@@ -134,7 +134,7 @@ public struct Hour : TimeUnit {
     
 }
 
-public struct Minute : TimeUnit {
+public enum Minute : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 60
@@ -142,7 +142,7 @@ public struct Minute : TimeUnit {
 
 }
 
-public struct Second : TimeUnit {
+public enum Second : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 1
@@ -150,7 +150,7 @@ public struct Second : TimeUnit {
     
 }
 
-public struct Millisecond : TimeUnit {
+public enum Millisecond : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 0.001
@@ -158,7 +158,7 @@ public struct Millisecond : TimeUnit {
     
 }
 
-public struct Microsecond : TimeUnit {
+public enum Microsecond : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 0.000001
@@ -166,7 +166,7 @@ public struct Microsecond : TimeUnit {
     
 }
 
-public struct Nanosecond : TimeUnit {
+public enum Nanosecond : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 1e-9
@@ -177,35 +177,39 @@ public struct Nanosecond : TimeUnit {
 public extension TimeInterval {
     
     var inSeconds: TimeInterval<Second> {
-        return TimeInterval<Second>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inMinutes: TimeInterval<Minute> {
-        return TimeInterval<Minute>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inMilliseconds: TimeInterval<Millisecond> {
-        return TimeInterval<Millisecond>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inMicroseconds: TimeInterval<Microsecond> {
-        return TimeInterval<Microsecond>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inNanoseconds: TimeInterval<Nanosecond> {
-        return TimeInterval<Nanosecond>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inHours: TimeInterval<Hour> {
-        return TimeInterval<Hour>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     var inDays: TimeInterval<Day> {
-        return TimeInterval<Day>(timeInterval: self.timeInterval)
+        return converted()
     }
     
     func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> TimeInterval<OtherUnit> {
-        return TimeInterval<OtherUnit>(timeInterval: self.timeInterval)
+        return TimeInterval<OtherUnit>(self.value * self.conversionRate(to: otherTimeUnit))
+    }
+    
+    func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Double {
+        return Unit.toTimeIntervalRatio / OtherUnit.toTimeIntervalRatio
     }
     
 }

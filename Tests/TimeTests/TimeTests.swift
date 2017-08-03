@@ -10,6 +10,14 @@ import Foundation
 import XCTest
 import Time
 
+public enum Week : TimeUnit {
+    
+    public static var toTimeIntervalRatio: Double {
+        return 604800
+    }
+    
+}
+
 class TimeTests: XCTestCase {
     
     func testSome() {
@@ -19,6 +27,21 @@ class TimeTests: XCTestCase {
     
     func testCompare() {
         XCTAssertTrue(10.minutes > 100.seconds)
+    }
+    
+    func testConverted() {
+        let tenMinutes = 10.minutes
+        XCTAssertEqual(tenMinutes.inSeconds.value, 600)
+    }
+    
+    func testUsage() {
+        let tenMinutes = 10.minutes
+        let afterTenMinutes = Date() + 10.minutes
+        let tenMinutesAndSome = 10.minutes + 15.seconds
+        let tenMinutesInSeconds = 10.minutes.inSeconds
+        if 10.minutes > 500.seconds {
+            print("That's right")
+        }
     }
     
 }
