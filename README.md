@@ -178,6 +178,24 @@ extension Int {
 }
 ```
 
+#### Also
+
+Also available:
+
+- Get conversion rate:
+
+```swift
+let conversionRate = Hour.conversionRate(to: Second.self) // 3600.0
+```
+
+- GCD integration:
+
+```swift
+DispatchQueue.main.asyncAfter(after: 5.seconds) {
+	// do stuff
+}
+```
+
 ## Disclaimer
 
 **Time** is in very early stage. Some stuff will probably be broken at some point.

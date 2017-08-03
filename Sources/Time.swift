@@ -43,6 +43,10 @@ extension Interval : Hashable {
         return lhs == rhs.converted()
     }
     
+    public static func != <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+        return lhs != rhs.converted()
+    }
+    
     public var hashValue: Int {
         return timeInterval.hashValue
     }
@@ -174,6 +178,14 @@ public enum Nanosecond : TimeUnit {
     
 }
 
+extension TimeUnit {
+    
+    public static func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Double {
+        return Self.toTimeIntervalRatio / OtherUnit.toTimeIntervalRatio
+    }
+    
+}
+
 public extension Interval {
     
     var inSeconds: Interval<Second> {
@@ -205,11 +217,7 @@ public extension Interval {
     }
     
     func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Interval<OtherUnit> {
-        return Interval<OtherUnit>(self.value * self.conversionRate(to: otherTimeUnit))
-    }
-    
-    func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Double {
-        return Unit.toTimeIntervalRatio / OtherUnit.toTimeIntervalRatio
+        return Interval<OtherUnit>(self.value * Unit.conversionRate(to: otherTimeUnit))
     }
     
 }
