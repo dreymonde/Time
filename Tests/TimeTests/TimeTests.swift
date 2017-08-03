@@ -17,4 +17,8 @@ class TimeTests: XCTestCase {
         XCTAssertEqual(tenMinutes.timeInterval, 605)
     }
     
+    func testCompare() {
+        XCTAssertTrue(10.minutes > 100.seconds)
+    }
+    
 }

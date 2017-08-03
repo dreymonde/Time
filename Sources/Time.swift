@@ -8,37 +8,104 @@
 
 import Foundation
 
-public protocol TimeUnit : Comparable {
-    
-    init(_ units: Double)
-    
-    var value: Double { get }
+public protocol TimeUnit {
     
     static var toTimeIntervalRatio: Double { get }
     
 }
 
-extension TimeUnit {
+public struct TimeInterval<Unit : TimeUnit> {
     
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.value == rhs.value
+    public var value: Double
+    
+    public init(_ value: Double) {
+        self.value = value
     }
     
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        return lhs.timeInterval < rhs.timeInterval
+    public var timeInterval: Foundation.TimeInterval {
+        return value * Unit.toTimeIntervalRatio
+    }
+    
+    public init(timeInterval: Foundation.TimeInterval) {
+        let value = timeInterval / Unit.toTimeIntervalRatio
+        self.init(value)
     }
     
 }
 
-extension TimeUnit {
+extension TimeInterval : Hashable {
     
-    public init(timeInterval: TimeInterval) {
-        let units = timeInterval / Self.toTimeIntervalRatio
-        self.init(units)
+    public static func == (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+        return lhs.value == rhs.value
     }
     
-    public var timeInterval: TimeInterval {
-        return value * Self.toTimeIntervalRatio
+    public static func == <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+        return lhs == rhs.converted()
+    }
+    
+    public var hashValue: Int {
+        return timeInterval.hashValue
+    }
+    
+}
+
+extension TimeInterval {
+    
+    public static func < (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+        return lhs.value < rhs.value
+    }
+    
+    public static func <= (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+        return lhs.value <= rhs.value
+    }
+    
+    public static func > (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+        return lhs.value >= rhs.value
+    }
+    
+    public static func >= (lhs: TimeInterval<Unit>, rhs: TimeInterval<Unit>) -> Bool {
+        return lhs.value >= rhs.value
+    }
+    
+    public static func < <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+        return lhs < rhs.converted()
+    }
+    
+    public static func <= <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+        return lhs <= rhs.converted()
+    }
+    
+    public static func > <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+        return lhs > rhs.converted()
+    }
+    
+    public static func >= <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> Bool {
+        return lhs >= rhs.converted()
+    }
+    
+}
+
+extension TimeInterval {
+    
+    public prefix static func - (lhs: TimeInterval<Unit>) -> TimeInterval<Unit> {
+        return TimeInterval<Unit>(-lhs.value)
+    }
+    
+    public static func + <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> TimeInterval<Unit> {
+        let inInterval = lhs.timeInterval + rhs.timeInterval
+        return TimeInterval<Unit>(timeInterval: inInterval)
+    }
+    
+    public static func - <OtherUnit : TimeUnit>(lhs: TimeInterval<Unit>, rhs: TimeInterval<OtherUnit>) -> TimeInterval<Unit> {
+        return lhs + (-rhs)
+    }
+    
+}
+
+extension Date {
+    
+    public func addingTimeInterval<Unit : TimeUnit>(_ interval: TimeInterval<Unit>) -> Date {
+        return addingTimeInterval(interval.timeInterval)
     }
     
 }
@@ -49,24 +116,12 @@ public struct Day : TimeUnit {
         return 86400
     }
     
-    public var value: Double
-    
-    public init(_ minutes: Double) {
-        self.value = minutes
-    }
-    
 }
 
 public struct Hour : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 3600
-    }
-    
-    public var value: Double
-    
-    public init(_ minutes: Double) {
-        self.value = minutes
     }
     
 }
@@ -76,25 +131,13 @@ public struct Minute : TimeUnit {
     public static var toTimeIntervalRatio: Double {
         return 60
     }
-    
-    public var value: Double
-    
-    public init(_ minutes: Double) {
-        self.value = minutes
-    }
-    
+
 }
 
 public struct Second : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 1
-    }
-    
-    public var value: Double
-    
-    public init(_ seconds: Double) {
-        self.value = seconds
     }
     
 }
@@ -105,24 +148,12 @@ public struct Millisecond : TimeUnit {
         return 0.001
     }
     
-    public var value: Double
-    
-    public init(_ seconds: Double) {
-        self.value = seconds
-    }
-    
 }
 
 public struct Microsecond : TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 0.000001
-    }
-    
-    public var value: Double
-    
-    public init(_ seconds: Double) {
-        self.value = seconds
     }
     
 }
@@ -133,153 +164,105 @@ public struct Nanosecond : TimeUnit {
         return 1e-9
     }
     
-    public var value: Double
-    
-    public init(_ seconds: Double) {
-        self.value = seconds
-    }
-    
 }
 
-
-public extension TimeUnit {
+public extension TimeInterval {
     
-    var inSeconds: Second {
-        return Second(timeInterval: self.timeInterval)
+    var inSeconds: TimeInterval<Second> {
+        return TimeInterval<Second>(timeInterval: self.timeInterval)
     }
     
-    var inMinutes: Minute {
-        return Minute(timeInterval: self.timeInterval)
+    var inMinutes: TimeInterval<Minute> {
+        return TimeInterval<Minute>(timeInterval: self.timeInterval)
     }
     
-    var inMilliseconds: Millisecond {
-        return Millisecond(timeInterval: self.timeInterval)
+    var inMilliseconds: TimeInterval<Millisecond> {
+        return TimeInterval<Millisecond>(timeInterval: self.timeInterval)
     }
     
-    var inMicroseconds: Microsecond {
-        return Microsecond(timeInterval: self.timeInterval)
+    var inMicroseconds: TimeInterval<Microsecond> {
+        return TimeInterval<Microsecond>(timeInterval: self.timeInterval)
     }
     
-    var inNanoseconds: Nanosecond {
-        return Nanosecond(timeInterval: self.timeInterval)
+    var inNanoseconds: TimeInterval<Nanosecond> {
+        return TimeInterval<Nanosecond>(timeInterval: self.timeInterval)
     }
     
-    var inHours: Hour {
-        return Hour(timeInterval: self.timeInterval)
+    var inHours: TimeInterval<Hour> {
+        return TimeInterval<Hour>(timeInterval: self.timeInterval)
     }
     
-    var inDays: Day {
-        return Day(timeInterval: self.timeInterval)
+    var inDays: TimeInterval<Day> {
+        return TimeInterval<Day>(timeInterval: self.timeInterval)
+    }
+    
+    func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> TimeInterval<OtherUnit> {
+        return TimeInterval<OtherUnit>(timeInterval: self.timeInterval)
     }
     
 }
 
 public extension Double {
     
-    var seconds: Second {
-        return Second(self)
+    var seconds: TimeInterval<Second> {
+        return TimeInterval<Second>(self)
     }
     
-    var minutes: Minute {
-        return Minute(self)
+    var minutes: TimeInterval<Minute> {
+        return TimeInterval<Minute>(self)
     }
     
-    var milliseconds: Millisecond {
-        return Millisecond(self)
+    var milliseconds: TimeInterval<Millisecond> {
+        return TimeInterval<Millisecond>(self)
     }
     
-    var microseconds: Microsecond {
-        return Microsecond(self)
+    var microseconds: TimeInterval<Microsecond> {
+        return TimeInterval<Microsecond>(self)
     }
     
-    var nanoseconds: Nanosecond {
-        return Nanosecond(self)
+    var nanoseconds: TimeInterval<Nanosecond> {
+        return TimeInterval<Nanosecond>(self)
     }
     
-    var hours: Hour {
-        return Hour(self)
+    var hours: TimeInterval<Hour> {
+        return TimeInterval<Hour>(self)
     }
     
-    var days: Day {
-        return Day(self)
+    var days: TimeInterval<Day> {
+        return TimeInterval<Day>(self)
     }
     
 }
 
 public extension Int {
     
-    var seconds: Second {
-        return Second(Double(self))
+    var seconds: TimeInterval<Second> {
+        return TimeInterval<Second>(Double(self))
     }
     
-    var minutes: Minute {
-        return Minute(Double(self))
+    var minutes: TimeInterval<Minute> {
+        return TimeInterval<Minute>(Double(self))
     }
     
-    var milliseconds: Millisecond {
-        return Millisecond(Double(self))
+    var milliseconds: TimeInterval<Millisecond> {
+        return TimeInterval<Millisecond>(Double(self))
     }
     
-    var microseconds: Microsecond {
-        return Microsecond(Double(self))
+    var microseconds: TimeInterval<Microsecond> {
+        return TimeInterval<Microsecond>(Double(self))
     }
     
-    var nanoseconds: Nanosecond {
-        return Nanosecond(Double(self))
+    var nanoseconds: TimeInterval<Nanosecond> {
+        return TimeInterval<Nanosecond>(Double(self))
     }
     
-    var hours: Hour {
-        return Hour(Double(self))
+    var hours: TimeInterval<Hour> {
+        return TimeInterval<Hour>(Double(self))
     }
     
-    var days: Day {
-        return Day(Double(self))
-    }
-    
-}
-
-public extension TimeUnit {
-    
-    static func + <OtherUnit : TimeUnit>(lhs: Self, rhs: OtherUnit) -> Self {
-        let inInterval = lhs.timeInterval + rhs.timeInterval
-        return Self(timeInterval: inInterval)
-    }
-    
-    static func - <OtherUnit : TimeUnit>(lhs: Self, rhs: OtherUnit) -> Self {
-        let inInterval = lhs.timeInterval - rhs.timeInterval
-        return Self(timeInterval: inInterval)
-    }
-    
-    static func += <OtherUnit : TimeUnit>(lhs: inout Self, rhs: OtherUnit) {
-        lhs = lhs + rhs
-    }
-    
-    static func -= <OtherUnit : TimeUnit>(lhs: inout Self, rhs: OtherUnit) {
-        lhs = lhs - rhs
-    }
-    
-    static func * (lhs: Self, rhs: Double) -> Self {
-        return Self(lhs.value * rhs)
-    }
-    
-    static func / (lhs: Self, rhs: Double) -> Self {
-        return Self(lhs.value / rhs)
-    }
-    
-    static prefix func - (lhs: Self) -> Self {
-        return Self(-lhs.value)
+    var days: TimeInterval<Day> {
+        return TimeInterval<Day>(Double(self))
     }
     
 }
 
-public extension Date {
-    
-    static func + <Unit : TimeUnit>(lhs: Date, rhs: Unit) -> Date {
-        return lhs.addingTimeInterval(rhs.timeInterval)
-    }
-    
-    static func - <Unit : TimeUnit>(lhs: Date, rhs: Unit) -> Date {
-        return lhs.addingTimeInterval(-rhs.timeInterval)
-    }
-    
-}
