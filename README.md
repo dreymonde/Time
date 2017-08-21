@@ -10,8 +10,6 @@ let interval: TimeInterval = 10 * 60
 
 To represent 10 minutes.
 
-- That's already enough
-
 ## Usage
 
 #### Showcase
