@@ -43,9 +43,13 @@ class TimeTests: XCTestCase {
         XCTAssertGreaterThan(afterTenMinutes, Date())
         XCTAssertEqual(tenMinutesAndSome.timeInterval, 615)
         XCTAssertEqual(tenMinutesInSeconds.value, 600)
+        
+        print(3.hours.inSeconds)
     }
     
 }
+
+let tenMinutes = Interval<Minute>(10)
 
 public enum Week : TimeUnit {
     

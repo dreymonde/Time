@@ -104,19 +104,19 @@ extension Interval {
         return lhs + (-rhs)
     }
     
-    static func += <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
+    public static func += <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs + rhs
     }
     
-    static func -= <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
+    public static func -= <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs - rhs
     }
     
-    static func * (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
+    public static func * (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
         return Interval<Unit>(lhs.value * rhs)
     }
     
-    static func / (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
+    public static func / (lhs: Interval<Unit>, rhs: Double) -> Interval<Unit> {
         return Interval<Unit>(lhs.value / rhs)
     }
     
@@ -285,4 +285,3 @@ public extension Int {
     }
     
 }
-
