@@ -180,7 +180,7 @@ public enum Nanosecond : TimeUnit {
 
 extension TimeUnit {
     
-    public static func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Double {
+    public static func conversionRate<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type) -> Double {
         return Self.toTimeIntervalRatio / OtherUnit.toTimeIntervalRatio
     }
     
