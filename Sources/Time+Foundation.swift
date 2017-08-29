@@ -34,10 +34,12 @@ extension Date {
 
 extension DispatchQueue {
     
+    @available(OSXApplicationExtension 10.10, *)
     func asyncAfter<Unit : TimeUnit>(after interval: Interval<Unit>, execute item: DispatchWorkItem) {
         self.asyncAfter(deadline: .now() + interval.timeInterval, execute: item)
     }
     
+    @available(OSXApplicationExtension 10.10, *)
     func asyncAfter<Unit : TimeUnit>(after interval: Interval<Unit>, qos: DispatchQoS = .default, flags: DispatchWorkItemFlags = [], execute block: @escaping () -> Void) {
         self.asyncAfter(deadline: .now() + interval.timeInterval, qos: qos, flags: flags, execute: block)
     }

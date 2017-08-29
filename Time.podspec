@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "Time"
   s.version      = "0.1.2"
-  s.summary      = ""
+  s.summary      = "Type-safe time calculations for Swift, powered by generics."
   s.description  = <<-DESC
     Your description here.
   DESC
