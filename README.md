@@ -203,7 +203,7 @@ DispatchQueue.main.asyncAfter(after: 5.seconds) {
 **Time** is available through [Carthage][carthage-url]. To install, just write into your Cartfile:
 
 ```ruby
-github "dreymonde/Time" ~> 0.1.0
+github "dreymonde/Time" ~> 0.2.0
 ```
 
 You can also use SwiftPM. Just add to your `Package.swift`:
@@ -213,7 +213,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 0, minor: 1),
+        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 0, minor: 2),
     ]
 )
 ```
