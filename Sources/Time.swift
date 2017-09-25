@@ -39,11 +39,11 @@ extension Interval : Hashable {
         return lhs.value == rhs.value
     }
     
-    public static func == <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func == <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs == rhs.converted()
     }
     
-    public static func != <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func != <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs != rhs.converted()
     }
     
@@ -71,19 +71,19 @@ extension Interval {
         return lhs.value >= rhs.value
     }
     
-    public static func < <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func < <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs < rhs.converted()
     }
     
-    public static func <= <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func <= <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs <= rhs.converted()
     }
     
-    public static func > <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func > <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs > rhs.converted()
     }
     
-    public static func >= <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
+    public static func >= <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Bool {
         return lhs >= rhs.converted()
     }
     
@@ -95,20 +95,20 @@ extension Interval {
         return Interval<Unit>(-lhs.value)
     }
     
-    public static func + <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
+    public static func + <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
         let inInterval = lhs.timeInterval + rhs.timeInterval
         return Interval<Unit>(timeInterval: inInterval)
     }
     
-    public static func - <OtherUnit : TimeUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
+    public static func - <OtherUnit>(lhs: Interval<Unit>, rhs: Interval<OtherUnit>) -> Interval<Unit> {
         return lhs + (-rhs)
     }
     
-    public static func += <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
+    public static func += <OtherUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs + rhs
     }
     
-    public static func -= <OtherUnit : TimeUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
+    public static func -= <OtherUnit>(lhs: inout Interval<Unit>, rhs: Interval<OtherUnit>) {
         lhs = lhs - rhs
     }
     
