@@ -47,6 +47,13 @@ class TimeTests: XCTestCase {
         print(3.hours.inSeconds)
     }
     
+    static let allTests = [
+        ("testSome", testSome),
+        ("testCompare", testCompare),
+        ("testConverted", testConverted),
+        ("testConversionRate", testConversionRate),
+        ("testUsage", testUsage)
+    ]
 }
 
 let tenMinutes = Interval<Minute>(10)
