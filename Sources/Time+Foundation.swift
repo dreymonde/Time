@@ -32,6 +32,7 @@ extension Date {
     
 }
 
+#if !os(Linux)
 extension DispatchQueue {
     
     @available(OSXApplicationExtension 10.10, *)
@@ -45,3 +46,4 @@ extension DispatchQueue {
     }
     
 }
+#endif
