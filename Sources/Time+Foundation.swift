@@ -7,7 +7,10 @@
 //
 
 import Foundation
-import Dispatch
+
+#if os(Linux)
+    import Dispatch
+#endif
 
 extension Date {
     
