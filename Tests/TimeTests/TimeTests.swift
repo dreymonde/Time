@@ -12,6 +12,13 @@ import XCTest
 
 class TimeTests: XCTestCase {
     
+    func testSpectre() {
+        testTime()
+        testExtensions()
+        let result = globalContext.run(reporter: StandardReporter())
+        XCTAssertTrue(result)
+    }
+    
     func testSome() {
         let tenMinutes = 10.minutes + 5.seconds
         XCTAssertEqual(tenMinutes.timeInterval, 605)

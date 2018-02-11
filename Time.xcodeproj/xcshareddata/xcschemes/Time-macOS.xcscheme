@@ -39,6 +39,23 @@
                BlueprintName = "Time-macOS Tests"
                ReferencedContainer = "container:Time.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "TimeTests/testCompare()">
+               </Test>
+               <Test
+                  Identifier = "TimeTests/testConversionRate()">
+               </Test>
+               <Test
+                  Identifier = "TimeTests/testConverted()">
+               </Test>
+               <Test
+                  Identifier = "TimeTests/testSome()">
+               </Test>
+               <Test
+                  Identifier = "TimeTests/testUsage()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
