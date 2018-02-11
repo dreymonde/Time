@@ -194,28 +194,32 @@ DispatchQueue.main.asyncAfter(after: 5.seconds) {
 }
 ```
 
-## Disclaimer
-
-**Time** is in very early stage. Some stuff will probably be broken at some point.
-
 ## Installation
 
 **Time** is available through [Carthage][carthage-url]. To install, just write into your Cartfile:
 
 ```ruby
-github "dreymonde/Time" ~> 0.2.0
+github "dreymonde/Time" ~> 1.0.0
 ```
 
-You can also use SwiftPM. Just add to your `Package.swift`:
+**Time** is also available through [Cocoapods][cocoapods-url] as "TimeIntervals":
+
+```ruby
+pod 'TimeIntervals', '~> 1.0.0'
+```
+
+And Swift Package Manager:
+
 
 ```swift
 import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 0, minor: 2),
+        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 1, minor: 0),
     ]
 )
 ```
 
 [carthage-url]: https://github.com/Carthage/Carthage
+[cocoapods-url]: https://github.com/CocoaPods/CocoaPods
