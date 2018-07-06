@@ -87,6 +87,18 @@ You can also use these operations on `Date`:
 let oneHourAfter = Date() + 1.hours
 ```
 
+#### Utilities
+
+You can easily calculate times in the future or past with
+
+```swift
+let trialEnds = 1.hours.fromNow
+```
+
+```swift
+let dataCutoff = 2.days.ago
+```
+
 #### Conversions
 
 Time intervals are easily convertible:
