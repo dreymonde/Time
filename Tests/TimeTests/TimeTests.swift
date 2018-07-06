@@ -54,12 +54,25 @@ class TimeTests: XCTestCase {
         print(3.hours.inSeconds)
     }
     
+    func testRelative() {
+        let afterTenMinutes = Date() + 10.minutes
+        let fromNow = 10.minutes.fromNow
+        let fromNowDifference = afterTenMinutes.timeIntervalSince(fromNow)
+        XCTAssertEqual(fromNowDifference, 0, accuracy: 0.1)
+        
+        let beforeTenMinutes = Date() - 10.minutes
+        let ago = 10.minutes.ago
+        let agoDifference = beforeTenMinutes.timeIntervalSince(ago)
+        XCTAssertEqual(agoDifference, 0, accuracy: 0.1)
+    }
+    
     static let allTests = [
         ("testSome", testSome),
         ("testCompare", testCompare),
         ("testConverted", testConverted),
         ("testConversionRate", testConversionRate),
-        ("testUsage", testUsage)
+        ("testUsage", testUsage),
+        ("testRelative", testRelative)
     ]
 }
 

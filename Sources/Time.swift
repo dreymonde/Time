@@ -220,6 +220,13 @@ public extension Interval {
         return Interval<OtherUnit>(self.value * Unit.conversionRate(to: otherTimeUnit))
     }
     
+    var fromNow: Date {
+        return Date.init() + self
+    }
+    
+    var ago: Date {
+        return Date.init() - self
+    }
 }
 
 public extension Double {
