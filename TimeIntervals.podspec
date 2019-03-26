@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TimeIntervals"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "Type-safe time calculations for Swift."
   s.description  = <<-DESC
     Type-safe time calculations for Swift, powered by generics.

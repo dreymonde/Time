@@ -22,7 +22,7 @@ struct ExpectationFailure : FailureType {
 
 open class Expectation<T> : ExpectationType {
   public typealias ValueType = T
-  open let expression: () throws -> ValueType?
+  public let expression: () throws -> ValueType?
 
   let file: String
   let line: Int
