@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/dreymonde/Time.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*"
   s.frameworks  = "Foundation"
+  s.swift_version = "4.2"
 end
