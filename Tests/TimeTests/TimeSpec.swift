@@ -34,7 +34,7 @@ func testTime() {
         }
         $0.it("has a hashValue") {
             let interval = Interval<OneSecond>(10)
-            try expect(interval.hashValue) == interval.timeInterval.hashValue
+            try expect(interval.hashValue) != 0
         }
     }
     

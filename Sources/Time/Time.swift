@@ -47,10 +47,9 @@ extension Interval : Hashable {
         return lhs != rhs.converted()
     }
     
-    public var hashValue: Int {
-        return timeInterval.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(timeInterval.hashValue)
     }
-    
 }
 
 extension Interval {

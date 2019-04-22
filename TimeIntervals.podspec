@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TimeIntervals"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "Type-safe time calculations for Swift."
   s.description  = <<-DESC
     Type-safe time calculations for Swift, powered by generics.
@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/dreymonde/Time.git", :tag => s.version.to_s }
   s.source_files  = "Sources/**/*"
   s.frameworks  = "Foundation"
+  s.swift_version = "4.2"
 end
