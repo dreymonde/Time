@@ -196,29 +196,49 @@ DispatchQueue.main.asyncAfter(after: 5.seconds) {
 
 ## Installation
 
-**Time** is available through [Carthage][carthage-url]. To install, just write into your Cartfile:
+#### Swift Package Manager
 
-```ruby
-github "dreymonde/Time" ~> 1.0.0
+Starting with Xcode 11, **Time** is officially available *only* via Swift Package Manager.
+
+In Xcode 11 or greater, in you project, select: `File > Swift Packages > Add Pacakage Dependency`
+
+In the search bar type
+
 ```
+https://github.com/dreymonde/Time
+``` 
 
-**Time** is also available through [Cocoapods][cocoapods-url] as "TimeIntervals":
+Then proceed with installation.
 
-```ruby
-pod 'TimeIntervals', '~> 1.0.0'
-```
+> If you can't find anything in the panel of the Swift Packages you probably haven't added yet your github account.
+You can do that under the **Preferences** panel of your Xcode, in the **Accounts** section.
 
-And Swift Package Manager:
-
+For command-line based apps, you can just add this directly to your **Package.swift** file:
 
 ```swift
-import PackageDescription
+dependencies: [
+    .package(url: "https://github.com/dreymonde/Time", from: "1.0.1"),
+]
+```
 
-let package = Package(
-    dependencies: [
-        .Package(url: "https://github.com/dreymonde/Time.git", majorVersion: 1, minor: 0),
-    ]
-)
+#### Manual
+
+Of course, you always have an option of just copying-and-pasting the code - **Time** is just two files, so feel free.
+
+#### Deprecated dependency managers
+
+Last **Delegated** version to support [Carthage][carthage-url] and [Cocoapods][cocoapods-url] is **1.0.1**. Carthage and Cocoapods will no longer be officially supported.
+
+Carthage:
+
+```ruby
+github "dreymonde/Delegated" ~> 1.0.1
+```
+
+Cocoapods:
+
+```ruby
+pod 'Delegated', '~> 1.0.1'
 ```
 
 [carthage-url]: https://github.com/Carthage/Carthage
