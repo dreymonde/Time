@@ -227,18 +227,18 @@ Of course, you always have an option of just copying-and-pasting the code - **Ti
 
 #### Deprecated dependency managers
 
-Last **Delegated** version to support [Carthage][carthage-url] and [Cocoapods][cocoapods-url] is **1.0.1**. Carthage and Cocoapods will no longer be officially supported.
+Last **Time** version to support [Carthage][carthage-url] and [Cocoapods][cocoapods-url] is **1.0.1**. Carthage and Cocoapods will no longer be officially supported.
 
 Carthage:
 
 ```ruby
-github "dreymonde/Delegated" ~> 1.0.1
+github "dreymonde/Time" ~> 1.0.1
 ```
 
 Cocoapods:
 
 ```ruby
-pod 'Delegated', '~> 1.0.1'
+pod 'TimeIntervals', '~> 1.0.1'
 ```
 
 [carthage-url]: https://github.com/Carthage/Carthage
