@@ -127,7 +127,7 @@ You can compare different time units as well
 If, for some reason, you need to create your own time unit, that's super easy to do:
 
 ```swift
-public enum Week : TimeUnit {
+public enum Week: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 604800
@@ -146,7 +146,7 @@ For the sake of convenience, don't forget to write those handy extensions:
 
 
 ```swift
-public enum Week : TimeUnit {
+public enum Week: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 604800
@@ -203,7 +203,7 @@ DispatchQueue.main.asyncAfter(after: 5.seconds) {
 
 Starting with Xcode 11, **Time** is officially available *only* via Swift Package Manager.
 
-In Xcode 11 or greater, in you project, select: `File > Swift Packages > Add Pacakage Dependency`
+In Xcode 11 or greater, in you project, select: `File > Swift Packages > Add Package Dependency`
 
 In the search bar type
 
@@ -220,7 +220,7 @@ For command-line based apps, you can just add this directly to your **Package.sw
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/dreymonde/Time", from: "1.0.1"),
+    .package(url: "https://github.com/dreymonde/Time", from: "1.1.0"),
 ]
 ```
 
