@@ -14,7 +14,12 @@ public protocol TimeUnit {
     
 }
 
-public struct Interval<Unit : TimeUnit> {
+public protocol AnyInterval {
+    var timeInterval: Foundation.TimeInterval { get }
+    func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type) -> Interval<OtherUnit>
+}
+
+public struct Interval<Unit: TimeUnit>: AnyInterval {
     
     public var value: Double
     
@@ -33,7 +38,7 @@ public struct Interval<Unit : TimeUnit> {
     
 }
 
-extension Interval : Hashable {
+extension Interval: Hashable {
     
     public static func == (lhs: Interval<Unit>, rhs: Interval<Unit>) -> Bool {
         return lhs.value == rhs.value
@@ -121,7 +126,7 @@ extension Interval {
     
 }
 
-public enum Day : TimeUnit {
+public enum Day: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 86400
@@ -129,7 +134,7 @@ public enum Day : TimeUnit {
     
 }
 
-public enum Hour : TimeUnit {
+public enum Hour: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 3600
@@ -137,7 +142,7 @@ public enum Hour : TimeUnit {
     
 }
 
-public enum Minute : TimeUnit {
+public enum Minute: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 60
@@ -145,7 +150,7 @@ public enum Minute : TimeUnit {
 
 }
 
-public enum Second : TimeUnit {
+public enum Second: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 1
@@ -153,7 +158,7 @@ public enum Second : TimeUnit {
     
 }
 
-public enum Millisecond : TimeUnit {
+public enum Millisecond: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 0.001
@@ -161,7 +166,7 @@ public enum Millisecond : TimeUnit {
     
 }
 
-public enum Microsecond : TimeUnit {
+public enum Microsecond: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 0.000001
@@ -169,7 +174,7 @@ public enum Microsecond : TimeUnit {
     
 }
 
-public enum Nanosecond : TimeUnit {
+public enum Nanosecond: TimeUnit {
     
     public static var toTimeIntervalRatio: Double {
         return 1e-9
@@ -186,39 +191,41 @@ extension TimeUnit {
 }
 
 public extension Interval {
-    
-    var inSeconds: Interval<Second> {
-        return converted()
-    }
-    
-    var inMinutes: Interval<Minute> {
-        return converted()
-    }
-    
-    var inMilliseconds: Interval<Millisecond> {
-        return converted()
-    }
-    
-    var inMicroseconds: Interval<Microsecond> {
-        return converted()
-    }
-    
-    var inNanoseconds: Interval<Nanosecond> {
-        return converted()
-    }
-    
-    var inHours: Interval<Hour> {
-        return converted()
-    }
-    
-    var inDays: Interval<Day> {
-        return converted()
-    }
-    
+
     func converted<OtherUnit : TimeUnit>(to otherTimeUnit: OtherUnit.Type = OtherUnit.self) -> Interval<OtherUnit> {
         return Interval<OtherUnit>(self.value * Unit.conversionRate(to: otherTimeUnit))
     }
+}
+
+public extension AnyInterval {
+
+    var inSeconds: Interval<Second> {
+        return converted(to: Second.self)
+    }
     
+    var inMinutes: Interval<Minute> {
+        return converted(to: Minute.self)
+    }
+    
+    var inMilliseconds: Interval<Millisecond> {
+        return converted(to: Millisecond.self)
+    }
+    
+    var inMicroseconds: Interval<Microsecond> {
+        return converted(to: Microsecond.self)
+    }
+    
+    var inNanoseconds: Interval<Nanosecond> {
+        return converted(to: Nanosecond.self)
+    }
+    
+    var inHours: Interval<Hour> {
+        return converted(to: Hour.self)
+    }
+    
+    var inDays: Interval<Day> {
+        return converted(to: Day.self)
+    }
 }
 
 public extension Double {
